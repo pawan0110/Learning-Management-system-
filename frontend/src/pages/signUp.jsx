@@ -4,13 +4,44 @@ import google from "../assets/google1.png";
 import { IoIosEye } from "react-icons/io";
 import { FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { serverUrl } from "../App";
+import { toast } from "react-toastify";
+import { ClipLoader } from "react-spinners";
+import axios from "axios"; 
 
 function SignUp() {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
+  const [name, setName] = useState(""); 
+  const [email, setEmail] = useState(""); 
+  const [role, setRole] = useState(""); 
+  const [password, setPassword] = useState(""); 
+  const [loading, setLoading] = useState(false);
+
+  const handleSignup = async () => {
+    setLoading(true);
+    try {
+      const result = await axios.post(
+        `${serverUrl}/api/auth/signup`, // <- ensure slash between serverUrl and route
+        { name, password, email, role },
+        { withCredentials: true }
+      );
+      console.log(result?.data);
+      setLoading(false);
+      navigate("/");
+      toast.success("signup successfully"); 
+    } catch (error) {
+      console.log(error);
+      const msg = error?.response?.data?.message || error.message || "Signup failed";
+      toast.error(msg);
+      setLoading(false);
+    }
+  };
+
   return (
+   
     <div className="bg-[#dddbdb] w-screen h-screen flex items-center justify-center">
-      <form className="w-[90%] md:w-[800px] h-[600px] bg-white shadow-xl rounded-2xl flex">
+      <form className="w-[90%] md:w-[800px] h-[600px] bg-white shadow-xl rounded-2xl flex" onClick={(e) => e.preventDefault()}>
         {/* Left div */}
         <div className="md:w-1/2 w-full h-full flex flex-col items-center justify-center gap-3">
           <div>
@@ -28,8 +59,11 @@ function SignUp() {
               type="text"
               className="border w-full h-[35px] border-[#e7e6e6] text-[15px] px-[7px]"
               placeholder="your name"
+              onChange={(e) => setName(e.target.value)}
+              value={name}
             />
           </div>
+          
           <div className="flex flex-col gap-1 w-[80%] items-start justify-center px-3">
             <label htmlFor="email" className="font-semibold">
               Email
@@ -39,6 +73,8 @@ function SignUp() {
               type="email"
               className="border w-full h-[35px] border-[#e7e6e6] text-[15px] px-[7px]"
               placeholder="email"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
             />
           </div>
           <div className="flex flex-col gap-1 w-[80%] items-start justify-center px-3 relative">
@@ -50,40 +86,55 @@ function SignUp() {
               type={show ? "text" : "password"}
               className="border w-full h-[35px] border-[#e7e6e6] text-[15px] px-[7px]"
               placeholder="password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
             />
             {!show ? (
-              <IoIosEye className="absolute w-5 h-5 cursor-pointer right-[5%] top-[75%] transform -translate-y-1/2" onClick={() => setShow(prev=>!prev)}/>
+              <IoIosEye
+                className="absolute w-5 h-5 cursor-pointer right-[5%] top-[75%] transform -translate-y-1/2"
+                onClick={() => setShow((prev) => !prev)}
+              />
             ) : (
-              <FaEyeSlash className="absolute w-5 h-5 cursor-pointer right-[5%] top-[75%] transform -translate-y-1/2" onClick={() => setShow(prev=>!prev)}/>
+              <FaEyeSlash
+                className="absolute w-5 h-5 cursor-pointer right-[5%] top-[75%] transform -translate-y-1/2"
+                onClick={() => setShow((prev) => !prev)}
+              />
             )}
           </div>
+
           <div className="flex md:w-[50%] w-[70%] items-center justify-between">
-            <span className="px-2.5 py-[5px] border-2 border-[#e7e6e6] rounded-xl cursor-pointer hover:border-black">
+            <span
+              className={`px-2.5 py-[5px] border-2 border-[#e7e6e6] rounded-xl cursor-pointer hover:border-black ${
+                role === "student" ? "border-black" : "border-[#646464]"
+              }`}
+              onClick={() => setRole("student")}
+            >
               Student
             </span>
-            <span className="px-2.5 py-[5px] border-2 border-[#e7e6e6] rounded-xl cursor-pointer hover:border-black">
+            <span
+              className={`px-2.5 py-[5px] border-2 border-[#e7e6e6] rounded-xl cursor-pointer hover:border-black ${
+                role === "educator" ? "border-black" : "border-[#646464]"
+              }`}
+              onClick={() => setRole("educator")}
+            >
               Educator
             </span>
           </div>
-          <button className="w-[80%] h-10 bg-black text-white cursor-pointer flex items-center justify-center rounded-[5px]">
-            Signup
+          <button className="w-[80%] h-10 bg-black text-white cursor-pointer flex items-center justify-center rounded-[5px]" onClick={handleSignup} disabled={loading}>
+            {loading ? <ClipLoader size={30} color="white" /> : "Signup"}
           </button>
-
-          <div className="w-[80%] flex items-center gap-2">
-            <div className="w-[25%] h-[0.5px] bg-[#c4c4c4]"></div>
-            <div className="w-[50%] text-[15px] text-[#6f6f6f] flex items-center justify-center">
-              Or continue
-            </div>
-            <div className="w-[25%] h-[0.5px] bg-[#c4c4c4]"></div>
+           <div className="text-[#6f6f6f]">
+            already have an account
+            <span
+              className="underline underline-offset-1 text-[black] cursor-pointer"
+              onClick={() => navigate("/login")}
+            >
+              {" "}
+              Login
+            </span>
           </div>
 
-          <div className="w-[80%] h-10 border border-black rounded-[5px] flex items-center justify-center">
-            <img src={google} className="w-5" alt="" />
-            <span className="text-[18px] text-gray-500">oogle</span>
-          </div>
-          <div className="text-[#6f6f6f]">already have an account
-          <span className="underline underline-offset-1 text-[black] cursor-pointer" onClick={()=> navigate("/login")}> Login</span>
-          </div>
+          {/* ...rest of UI unchanged ... */}
         </div>
 
         {/* Right div */}
