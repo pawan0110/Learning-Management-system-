@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import logo from "../assets/signup3.jpg";
-import google from "../assets/google1.png";
 import { IoIosEye } from "react-icons/io";
 import { FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +7,8 @@ import { serverUrl } from "../App";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import axios from "axios"; 
+import { useDispatch } from "react-redux";
+import { setUserData } from "../redux/userSlice";
 
 function SignUp() {
   const [show, setShow] = useState(false);
@@ -17,6 +18,7 @@ function SignUp() {
   const [role, setRole] = useState(""); 
   const [password, setPassword] = useState(""); 
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch()
 
   const handleSignup = async () => {
     setLoading(true);
@@ -26,7 +28,7 @@ function SignUp() {
         { name, password, email, role },
         { withCredentials: true }
       );
-      console.log(result?.data);
+      dispatch(setUserData(result?.data))
       setLoading(false);
       navigate("/");
       toast.success("signup successfully"); 

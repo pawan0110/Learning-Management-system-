@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
+import Nav from "../component/Nav";
 
 function Home() {
   return (
-    <div>Home</div>
-  )
+    <div className="w-full overflow-hidden">
+      <div>
+        <Nav />
+      </div>
+    </div>
+  );
 }
 
-export default Home
+export default Home;
