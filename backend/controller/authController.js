@@ -1,3 +1,4 @@
+import sendMail from "../config/sendMail.js";
 import genToken from "../config/token.js";
 import User from "../model/userModel.js";
 import bcrypt from "bcryptjs";
@@ -67,4 +68,41 @@ export const logOut = async (req,res) => {
     } catch (error) {
         return res.status(500).json({message:`logOut error ${error}`})
     }
+}
+
+export const sendOtp = async (req,res) => {
+  try {
+    const {email} = req.body
+    const user = await User.findOne({email})
+    if(!user){
+      return res.status(404).json({message:"user not found"})
+    }
+    const otp = Math.floor(1000 + Math.random() * 9000).toString()
+    user.resetOtp = otp,
+    user.otpExpires=Date.now() + 5*60*1000,
+    user.isOtpVerified= false
+
+    await user.save()
+    await sendMail(email,otp)
+    return res.status(200).json({message:"OTP send"})
+  } catch (error) {
+    return res.status(500).json({message:`send OTP error ${error}`})
+  }
+}
+
+export const verifyotp = async (req,res) => {
+  try {
+    const {email,otp} = req.body
+    const user = await User.findOne({email})
+    if(!user || user.resetOtp!=otp || user.otpExpires<Date.now()){
+      return res.status(400).json({message:"Invalid OTP"})
+    }
+    user.isOtpVerified=true
+    user.resetOtp=undefined
+    user.otpExpires=undefined
+    await user.save()
+    return res.status(200).json({message:"OTP varified"})
+  } catch (error) {
+    return res.status(500).json({message:`verify OTP error ${error}`})
+  }
 }
