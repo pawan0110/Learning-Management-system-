@@ -113,7 +113,7 @@ function Login() {
         {/* Right div */}
         <div className="md:w-1/2 w-0 h-full rounded-r-2xl bg-black md:flex flex-col items-center justify-center hidden">
           <img src={logo} alt="logo" className="w-32 mb-3 drop-shadow-lg" />
-          <span className="text-3xl text-white font-extrabold tracking-wide">TeachMate</span>
+          <span className="text-3xl text-white font-extrabold tracking-wide">CodeNex</span>
         </div>
       </form>
     </div>

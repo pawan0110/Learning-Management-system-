@@ -90,7 +90,7 @@ export const sendOtp = async (req,res) => {
   }
 }
 
-export const verifyotp = async (req,res) => {
+export const verifyOtp = async (req,res) => {
   try {
     const {email,otp} = req.body
     const user = await User.findOne({email})
@@ -107,7 +107,7 @@ export const verifyotp = async (req,res) => {
   }
 }
 
-export const resetpassword = async (req,res) => {
+export const resetPassword = async (req,res) => {
   try {
     const {email, password} = req.body
     const user = await User.findOne({email})
