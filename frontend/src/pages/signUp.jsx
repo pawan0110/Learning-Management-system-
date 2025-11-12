@@ -31,7 +31,7 @@ function SignUp() {
         { name, password, email, role },
         { withCredentials: true }
       );
-      localStorage.setItem("token", result.data.token);
+    
       dispatch(setUserData(result?.data))
       setLoading(false);
       navigate("/");
@@ -53,7 +53,7 @@ function SignUp() {
       let email = user.email
 
       const result = await axios.post(`${serverUrl}/api/auth/googlesignup`, {name, email, role}, {withCredentials:true})
-      localStorage.setItem("token", result.data.token);
+     
       dispatch(setUserData(result.data.user))
       navigate("/")
       toast.success("signUp Successfully")
