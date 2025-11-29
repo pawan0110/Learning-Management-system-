@@ -17,7 +17,9 @@ function App() {
  
   let { userData } = useSelector((store) => store.user);
 
-   getCurrentUser();
+  
+    getCurrentUser();
+ 
 
   return (
     <>

@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { serverUrl } from "../App";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
-import axios from "axios"; // <- Added import
+import axios from "axios"; 
 import {  useDispatch } from "react-redux";
 import { setUserData } from "../redux/userSlice";
 import { signInWithPopup } from "firebase/auth";
@@ -31,7 +31,7 @@ function Login() {
         { withCredentials: true } 
       );
       localStorage.setItem("token", result.data.token);
-      dispatch(setUserData(result?.data))
+      dispatch(setUserData(result?.data.user))
       setLoading(false);
       navigate("/");
       toast.success("Login successfully");

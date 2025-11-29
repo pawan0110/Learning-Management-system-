@@ -33,7 +33,8 @@ function Profile() {
 
           <div className="text-sm">
             <span className="font-semibold text-gray-700">Bio: </span>
-            <span>{userData.description}</span>
+            <span>{userData.bio}</span>
+
           </div>
 
           
