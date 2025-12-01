@@ -127,7 +127,7 @@ export const resetPassword = async (req,res) => {
 export const googleSignup = async (req, res) => {
   try {
     const { name, email, role, photoUrl } = req.body;
-    console.log("📩 Google signup body:", req.body);
+    //console.log("📩 Google signup body:", req.body);
 
     let user = await User.findOne({ email });
 
@@ -136,7 +136,7 @@ export const googleSignup = async (req, res) => {
         name,
         email,
         role,
-        password: "google-auth", // dummy password (never used)
+        password: "google-auth", 
         photoUrl,
       });
     }

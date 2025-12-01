@@ -31,7 +31,7 @@ export const getPublishedCourses = async (req, res) => {
       "lectures reviews"
     );
     if (!courses) {
-      return res.status(400).json({ message: "Course not found" });
+      return res.status(400).json({ message: "Course not found" })
     }
 
     return res.status(200).json(courses);
