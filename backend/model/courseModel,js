@@ -42,8 +42,8 @@ const courseSchema = new mongoose.Schema({
         default:false
     },
     reviews: [{
-        types: mongoose.Schema.types.ObjectId,
-        ref:"Review"
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Review'
     }],
 },{timestamps:true})
 
