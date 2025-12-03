@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 import { FaEdit } from "react-icons/fa";
-import { serverUrl } from "../App";
+import { serverUrl } from "../../App";
 import { toast } from "react-toastify";
 import axios from "axios";
 
@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setCreatorCourseData } from "../../redux/courseSlice";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { toast } from "react-toastify";
+
 
 function Courses() {
   let navigate = useNavigate();
