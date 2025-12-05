@@ -1,39 +1,40 @@
 import React, { useEffect } from "react";
-
+import img1 from "../../assets/empty.jpg";
 import { FaEdit } from "react-icons/fa";
 import { serverUrl } from "../../App";
 import { toast } from "react-toastify";
 import axios from "axios";
-
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setCreatorCourseData } from "../../redux/courseSlice";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
-
 function Courses() {
-  let navigate = useNavigate();
-  let dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const { createCourseData } = useSelector((state) => state.Course);
+  const creatorCourseData =
+    useSelector((state) => state.course?.creatorCourseData) || [];
 
   useEffect(() => {
     const getCreatorData = async () => {
       try {
         const result = await axios.get(
           `${serverUrl}/api/course/getcreatorcourses`,
-          { withCredentails: true }
+          { withCredentials: true }
         );
 
-        await dispatch(setCreatorCourseData(result.data));
+        dispatch(setCreatorCourseData(result.data));
         console.log(result.data);
       } catch (error) {
         console.log(error);
-        toast.error(error.response.data.message);
+        toast.error(
+          error?.response?.data?.message || error?.message || "Failed to load courses"
+        );
       }
     };
     getCreatorData();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -46,52 +47,66 @@ function Courses() {
             />
             <h1 className="text-xl font-semibold">Courses</h1>
           </div>
-          <button className="bg-[black] text-white px-4 py-2 rounded hover:bg-gray-500"
-          onClick={() =>navigate("/createcourses")}>
+          <button
+            className="bg-[black] text-white px-4 py-2 rounded hover:bg-gray-500"
+            onClick={() => navigate("/createcourses")}
+          >
             Create Course
           </button>
         </div>
 
-        {/* for larger screen (table layout) */}
-
-        <div className="hidden md:block bg-white
-        rounded-xl shadow p-4 overflow-x-auto">
-        <table className="min-w-full text-sm">
-          <thead className="border-b bg-gray-50">
-            <tr>
+        <div className="hidden md:block bg-white rounded-xl shadow p-4 overflow-x-auto">
+          <table className="min-w-full text-sm">
+            <thead className="border-b bg-gray-50">
+              <tr>
                 <th className="text-left py-3 px-4">Course</th>
                 <th className="text-left py-3 px-4">Price</th>
                 <th className="text-left py-3 px-4">Status</th>
                 <th className="text-left py-3 px-4">Action</th>
               </tr>
-          </thead>
-<tbody>
+            </thead>
+            <tbody>
               {creatorCourseData?.map((course, index) => (
-
-                <tr key={index}
-
+                <tr
+                  key={index}
                   className="border-b hover:bg-gray-50 transition duration-200"
                 >
                   <td className="py-3 px-4 flex items-center gap-4">
-                    {course?.thumbnail ? <img
-                      src={course?.thumbnail}
-                      alt=""
-                      className="w-25 h-14 object-cover rounded-md"
-                    /> : <img src={img1} alt='' className="w-14 h-14 object-cover rounded-md object-fit" />}
+                    {course?.thumbnail ? (
+                      <img
+                        src={course.thumbnail}
+                        alt=""
+                        className="w-25 h-14 object-cover rounded-md"
+                      />
+                    ) : (
+                      <img src={img1} alt="" className="w-14 h-14 object-cover rounded-md" />
+                    )}
                     <span>{course?.title}</span>
                   </td>
-                  {course?.price ? <td className="py-3 px-4">₹{course?.price}</td> : <td className="py-3 px-4">₹ NA</td>}
+                  {course?.price ? (
+                    <td className="py-3 px-4">₹{course?.price}</td>
+                  ) : (
+                    <td className="py-3 px-4">₹ NA</td>
+                  )}
                   <td className="py-3 px-4">
-                    <span className={`  px-3 py-1 rounded-full text-xs ${course?.isPublished ? "text-green-600 bg-green-100" : "text-red-600 bg-red-100"}`}>
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs ${
+                        course?.isPublished
+                          ? "text-green-600 bg-green-100"
+                          : "text-red-600 bg-red-100"
+                      }`}
+                    >
                       {course?.isPublished ? "Published" : "Draft"}
                     </span>
                   </td>
                   <td className="py-3 px-4">
-                    <FaEdit className="text-gray-600 hover:text-blue-600 cursor-pointer" onClick={() => navigate(`/addcourses/${course?._id}`)} />
+                    <FaEdit
+                      className="text-gray-600 hover:text-blue-600 cursor-pointer"
+                      onClick={() => navigate(`/addcourses/${course?._id}`)}
+                    />
                   </td>
                 </tr>
-              ))
-              }
+              ))}
             </tbody>
           </table>
           <p className="text-center text-sm text-gray-400 mt-6">
@@ -99,45 +114,46 @@ function Courses() {
           </p>
         </div>
 
-
         <div className="md:hidden space-y-4">
           {creatorCourseData?.map((course, index) => (
-            <div key={index}
-
-              className="bg-white rounded-lg shadow p-4 flex flex-col gap-3 "
-            >
+            <div key={index} className="bg-white rounded-lg shadow p-4 flex flex-col gap-3 ">
               <div className="flex gap-4 items-center">
-                {course?.thumbnail ? <img
-                  src={course?.thumbnail}
-                  alt=""
-                  className="w-16 h-16 rounded-md object-cover"
-                /> : <img
-                  src={img1}
-                  alt=""
-                  className="w-16 h-16 rounded-md object-cover"
-                />}
+                {course?.thumbnail ? (
+                  <img
+                    src={course.thumbnail}
+                    alt=""
+                    className="w-16 h-16 rounded-md object-cover"
+                  />
+                ) : (
+                  <img src={img1} alt="" className="w-16 h-16 rounded-md object-cover" />
+                )}
                 <div className="flex-1">
                   <h2 className="font-medium text-sm">{course?.title}</h2>
-                  {course?.price ? <p className="text-gray-600 text-xs mt-1">₹{course?.price}</p> : <p className="text-gray-600 text-xs mt-1">₹ NA</p>}
+                  {course?.price ? (
+                    <p className="text-gray-600 text-xs mt-1">₹{course.price}</p>
+                  ) : (
+                    <p className="text-gray-600 text-xs mt-1">₹ NA</p>
+                  )}
                 </div>
-                <FaEdit className="text-gray-600 hover:text-blue-600 cursor-pointer" onClick={() => navigate(`/addcourses/${course?._id}`)} />
+                <FaEdit
+                  className="text-gray-600 hover:text-blue-600 cursor-pointer"
+                  onClick={() => navigate(`/addcourses/${course?._id}`)}
+                />
               </div>
-              <span className={` w-fit px-3 py-1 text-xs rounded-full  ${course?.isPublished ? "text-green-600 bg-green-100" : "text-red-600 bg-red-100"}`}>
+              <span
+                className={`w-fit px-3 py-1 text-xs rounded-full ${
+                  course?.isPublished ? "text-green-600 bg-green-100" : "text-red-600 bg-red-100"
+                }`}
+              >
                 {course?.isPublished ? "Published" : "Draft"}
               </span>
             </div>
           ))}
-          <p className="text-center text-sm text-gray-400 mt-4 pl-20">
-            A list of your recent courses.
-          </p>
-
+          <p className="text-center text-sm text-gray-400 mt-4 pl-20">A list of your recent courses.</p>
         </div>
-
-
       </div>
     </div>
   );
-
 }
 
-export default Courses
+export default Courses;

@@ -8,8 +8,11 @@ import getCurrentUser from "./customHooks/getCurrentUser.js";
 import { useSelector } from "react-redux";
 import Profile from "./pages/Profile.jsx";
 import AddCourses from './pages/admin/AddCourses'
-// import Dashboard from './pages/admin/Dashboard'
+ import Dashboard from './pages/admin/Dashboard'
 import Courses from './pages/admin/Courses'
+import CreateLecture from "./pages/admin/CreateLecture.jsx";
+import EditLecture from "./pages/admin/EditLecture.jsx";
+import AllCourses from "./pages/AllCourses.jsx";
 import CreateCourse from './pages/admin/CreateCourse'
 import ForgetPassword from "./pages/ForgetPassword.jsx";
 import EditProfile from './pages/EditProfile.jsx'
@@ -45,12 +48,16 @@ function App() {
           <Route path="/profile" element={<Profile />} />
         </Route>
          <Route path='/editprofile' element={userData?<EditProfile/>:<Navigate to={"/signup"}/>}/>
-         
-         {/* <Route path='/dashboard' element={userData?.role==="educator"?<Dashboard/>:<Navigate to={"/signup"}/>}/> */}
+
+
+           <Route path='/allcourses' element={userData?<AllCourses/>:<Navigate to={"/signup"}/>}/>
+         <Route path='/dashboard' element={userData?.role==="educator"?<Dashboard/>:<Navigate to={"/signup"}/>}/>
          <Route path='/courses' element={userData?.role==="educator"?<Courses/>:<Navigate to={"/signup"}/>}/>
           <Route path='/addcourses/:courseId' element={userData?.role === "educator"?<AddCourses/>:<Navigate to={"/signup"}/>}/>
         <Route path='/createcourses' element={userData?.role === "educator"?<CreateCourse/>:<Navigate to={"/signup"}/>}/>
         <Route path='/createlecture/:courseId' element={userData?.role === "educator"?<CreateLecture/>:<Navigate to={"/signup"}/>}/>
+         <Route path='/editlecture/:courseId/:lectureId' element={userData?.role === "educator"?<EditLecture/>:<Navigate to={"/signup"}/>}/>
+        <Route path='/forgotpassword' element={ForgetPassword}/>
       </Routes>
     </>
   );
