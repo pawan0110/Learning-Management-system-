@@ -40,62 +40,26 @@ export const getCreatorCourses = async (req, res) => {
   }
 };
 
-export const editCourse = async (req, res) => {
-  try {
-    const { courseId } = req.params;
-    const {
-      title,
-      subTitle,
-      description,
-      category,
-      level,
-      price,
-      isPublished,
-    } = req.body;
+export const editCourse = async (req,res) => {
+    try {
+        const {courseId} = req.params;
+        const {title , subTitle , description , category , level , price , isPublished } = req.body;
+        let thumbnail
+         if(req.file){
+            thumbnail =await uploadOnCloudinary(req.file.path)
+                }
+        let course = await Course.findById(courseId)
+        if(!course){
+            return res.status(404).json({message:"Course not found"})
+        }
+        const updateData = {title , subTitle , description , category , level , price , isPublished ,thumbnail}
 
-    // convert string → boolean
-    let finalIsPublished = isPublished;
-    if (typeof isPublished === "string") {
-      finalIsPublished = isPublished === "true";
+        course = await Course.findByIdAndUpdate(courseId , updateData , {new:true})
+        return res.status(201).json(course)
+    } catch (error) {
+        return res.status(500).json({message:`Failed to update course ${error}`})
     }
-
-    let thumbnail = null;
-    if (req.file) {
-      const filePath = req.file.path || req.file.filename;
-      thumbnail = await uploadOnCloudinary(filePath);
-    }
-
-    const course = await Course.findById(courseId);
-    if (!course) {
-      return res.status(404).json({ message: "Course not found" });
-    }
-
-    const updateData = {
-      title: title ?? course.title,
-      subTitle: subTitle ?? course.subTitle,
-      description: description ?? course.description,
-      category: category ?? course.category,
-      level: level ?? course.level,
-      price: price ?? course.price,
-      isPublished:
-        typeof finalIsPublished !== "undefined"
-          ? finalIsPublished
-          : course.isPublished,
-    };
-
-    if (thumbnail) updateData.thumbnail = thumbnail;
-
-    const updated = await Course.findByIdAndUpdate(courseId, updateData, {
-      new: true,
-    });
-
-    return res.status(200).json(updated);
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: `Failed to update course: ${error.message || error}` });
-  }
-};
+}
 
 
 export const getCourseById = async (req, res) => {
