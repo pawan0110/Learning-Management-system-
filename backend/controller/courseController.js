@@ -24,12 +24,21 @@ export const createCourse = async (req, res) => {
 
 export const getPublishedCourses = async (req, res) => {
   try {
-    const courses = await Course.find({ isPublished: true }).populate("lectures reviews");
+    const courses = await Course.find({ isPublished: true })
+      .populate("lectures")
+     // .populate("reviews");
+
     return res.status(200).json(courses);
   } catch (error) {
-    return res.status(500).json({ message: `Failed to get published courses: ${error.message || error}` });
+    console.log("GET PUBLISHED ERROR:", error); // <-- PRINT FULL ERROR
+    return res.status(500).json({
+      message: `Failed to get published courses`,
+      error: error.message,
+    });
   }
 };
+
+
 
 export const getCreatorCourses = async (req, res) => {
   try {

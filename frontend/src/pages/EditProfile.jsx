@@ -36,7 +36,7 @@ function EditProfile() {
       );
       // console.log(result.data)
       dispatch(setUserData(result.data));
-      navigate("/");
+      navigate("/Profile");
       setLoading(false);
 
       toast.success("Profile Update Successfully");
