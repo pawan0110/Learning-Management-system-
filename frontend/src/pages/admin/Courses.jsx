@@ -74,7 +74,7 @@ function Courses() {
                   <td className="py-3 px-4 flex items-center gap-4">
                     {course?.thumbnail ? (
                       <img
-                        src={course.thumbnail}
+                        src={course.thumbnail?.url}
                         alt=""
                         className="w-25 h-14 object-cover rounded-md"
                       />
@@ -120,7 +120,7 @@ function Courses() {
               <div className="flex gap-4 items-center">
                 {course?.thumbnail ? (
                   <img
-                    src={course.thumbnail}
+                    src={course.thumbnail?.url}
                     alt=""
                     className="w-16 h-16 rounded-md object-cover"
                   />

@@ -31,6 +31,7 @@ export const signUp = async (req, res) => {
       sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
+    const { password: pass, ...rest } = user._doc;
     return res.status(201).json(user);
   } catch (error) {
     return res.status(500).json({ message: `signUp error ${error}` });
@@ -40,26 +41,43 @@ export const signUp = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+
     let user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).json({ message: "user not found" });
+      return res.status(404).json({ message: "User not found" });
     }
+
     let isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Incorrect password" });
     }
+
     let token = await genToken(user._id);
+
     res.cookie("token", token, {
       httpOnly: true,
       secure: false,
       sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    return res.status(200).json(user);
+
+    return res.status(200).json({
+      message: "Login successful",
+      token,
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        provider: user.provider,
+        photoUrl: user.photoUrl,
+      },
+    });
   } catch (error) {
     return res.status(500).json({ message: `login error ${error}` });
   }
 };
+
 
 export const logOut = async (req,res) => {
     try {
@@ -126,38 +144,50 @@ export const resetPassword = async (req,res) => {
 
 export const googleSignup = async (req, res) => {
   try {
-    const { name, email, role, photoUrl } = req.body;
-    //console.log("📩 Google signup body:", req.body);
+    const { name, email, role } = req.body;
 
+    // CHECK IF USER ALREADY EXISTS
     let user = await User.findOne({ email });
 
     if (!user) {
+      // CREATE NEW GOOGLE USER
       user = await User.create({
         name,
         email,
-        role,
-        password: "google-auth", 
-        photoUrl,
+        role: role || "student",
+        provider: "google",
+        password: "",       // Google users don't have passwords
+        photoUrl: "",       // You can store Google photo URL too
       });
     }
 
+    // GEN TOKEN
     const token = await genToken(user._id);
+
+    // SET COOKIE
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
+      secure: false,
+      sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
+    // SEND TOKEN + USER
     return res.status(200).json({
-      message: "Google signup/login successful",
-      user,
-      token
+      message: "Google login successful",
+      token,
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        provider: user.provider,
+        photoUrl: user.photoUrl,
+      },
     });
+
   } catch (error) {
-    console.error(error);
-    return res
-      .status(500)
-      .json({ message: `googleSignup error: ${error.message}` });
+    return res.status(500).json({ message: `Google login error ${error}` });
   }
 };
+

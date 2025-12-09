@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
 import ai from "../assets/SearchAi.png";
 import { useSelector } from "react-redux";
-// import Card from "../components/Card";   // ← UNCOMMENT THIS LINE
+import Card from "../components/Card";   // ← UNCOMMENT THIS LINE
 
 function AllCourses() {
   const navigate = useNavigate();
@@ -108,7 +108,7 @@ function AllCourses() {
       </aside>
 
       ------- MAIN CONTENT: COURSE CARDS -------
-      {/* <main className="w-full transition-all duration-300 py-[130px] md:pl-[300px] flex items-start justify-center md:justify-start flex-wrap gap-6 px-2.5">
+      <main className="w-full transition-all duration-300 py-[130px] md:pl-[300px] flex items-start justify-center md:justify-start flex-wrap gap-6 px-2.5">
         {filterCourses?.length > 0 ? (
           filterCourses.map((item, index) => (
             <Card
@@ -124,7 +124,7 @@ function AllCourses() {
         ) : (
           <p className="text-gray-600 text-lg">No courses found.</p>
         )}
-      </main> */}
+      </main>
     </div>
   );
 }

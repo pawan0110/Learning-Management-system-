@@ -3,6 +3,7 @@ import Course from "../model/courseModel.js";
 import Lecture from "../model/lectureModel.js";
 import User from "../model/userModel.js";
 
+
 export const createCourse = async (req, res) => {
   try {
     const { title, category } = req.body;

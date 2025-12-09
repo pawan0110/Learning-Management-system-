@@ -50,7 +50,7 @@ function AddCourses() {
     setCategory(selectedCourse.category || "")
     setLevel(selectedCourse.level || "")
     setPrice(selectedCourse.price || "")
-    setFrontendImage(selectedCourse.thumbnail || img)
+    setFrontendImage(selectedCourse.thumbnail?.url || img)
     setIsPublished(selectedCourse?.isPublished)
 
 
@@ -71,14 +71,18 @@ function AddCourses() {
 const editCourseHandler = async () => {
   setLoading(true);
   const formData = new FormData();
+
   formData.append("title", title);
   formData.append("subTitle", subTitle);
   formData.append("description", description);
   formData.append("category", category);
   formData.append("level", level);
   formData.append("price", price);
-  formData.append("thumbnail", backendImage);
   formData.append("isPublished", isPublished);
+
+  if (backendImage) {
+    formData.append("thumbnail", backendImage); // only send file if user uploaded
+  }
 
   try {
     const result = await axios.post(
@@ -87,22 +91,8 @@ const editCourseHandler = async () => {
       { withCredentials: true }
     );
 
-    const updatedCourse = result.data;
-    if (updatedCourse.isPublished) {
-      const updatedCourses = courseData.map(c =>
-        c._id === courseId ? updatedCourse : c
-      );
-      if (!courseData.some(c => c._id === courseId)) {
-        updatedCourses.push(updatedCourse);
-      }
-      dispatch(setCourseData(updatedCourses));
-    } else {
-      const filteredCourses = courseData.filter(c => c._id !== courseId);
-      dispatch(setCourseData(filteredCourses));
-    }
-
-    navigate("/courses");
     toast.success("Course Updated");
+    navigate("/courses");
   } catch (error) {
     console.log(error);
     toast.error(error.response?.data?.message || "Something went wrong");
@@ -110,6 +100,7 @@ const editCourseHandler = async () => {
     setLoading(false);
   }
 };
+
 
 
   const removeCourse = async () => {
