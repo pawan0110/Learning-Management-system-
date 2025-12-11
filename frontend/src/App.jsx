@@ -16,6 +16,8 @@ import AllCourses from "./pages/AllCourses.jsx";
 import CreateCourse from './pages/admin/CreateCourse'
 import ForgetPassword from "./pages/ForgetPassword.jsx";
 import EditProfile from './pages/EditProfile.jsx'
+// import getCouseData from './customHooks/getCouseData'
+import ViewCourse from './pages/ViewCourse'
 import { AuthRoute, PrivateRoute } from "./components/ProtectedRoutes.jsx";
 
 export const serverUrl = "http://localhost:8080";
@@ -47,7 +49,10 @@ function App() {
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
         </Route>
+        
          <Route path='/editprofile' element={userData?<EditProfile/>:<Navigate to={"/signup"}/>}/>
+
+         <Route path= 'viewcourse/:courseId' element={userData?<ViewCourse/>:<Navigate to={"/signup"}/>}/>
 
 
            <Route path='/allcourses' element={userData?<AllCourses/>:<Navigate to={"/signup"}/>}/>
