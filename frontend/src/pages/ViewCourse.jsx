@@ -32,31 +32,31 @@ function ViewCourse() {
   
 
 
-//   const handleReview = async () => {
-//     try {
-//       const result = await axios.post(serverUrl + "/api/review/givereview" , {rating , comment , courseId} , {withCredentials:true})
-//       toast.success("Review Added")
-//       console.log(result.data)
-//       setRating(0)
-//       setComment("")
+  const handleReview = async () => {
+    try {
+      const result = await axios.post(serverUrl + "/api/review/givereview" , {rating , comment , courseId} , {withCredentials:true})
+      toast.success("Review Added")
+      console.log(result.data)
+      setRating(0)
+      setComment("")
 
-//     } catch (error) {
-//       console.log(error)
-//       toast.error(error.response.data.message)
-//     }
-//   }
+    } catch (error) {
+      console.log(error)
+      toast.error(error.response.data.message)
+    }
+  }
   
 
-//   const calculateAverageRating = (reviews) => {
-//   if (!reviews || reviews.length === 0) return 0;
+  const calculateAverageRating = (reviews) => {
+  if (!reviews || reviews.length === 0) return 0;
 
-//   const total = reviews.reduce((sum, review) => sum + review.rating, 0);
-//   return (total / reviews.length).toFixed(1); // rounded to 1 decimal
-// };
+  const total = reviews.reduce((sum, review) => sum + review.rating, 0);
+  return (total / reviews.length).toFixed(1); // rounded to 1 decimal
+};
 
-// // Usage:
-// const avgRating = calculateAverageRating(selectedCourseData?.reviews);
-// console.log("Average Rating:", avgRating);
+// Usage:
+const avgRating = calculateAverageRating(selectedCourseData?.reviews);
+console.log("Average Rating:", avgRating);
 
   
 
