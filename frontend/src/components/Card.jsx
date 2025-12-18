@@ -6,7 +6,7 @@ const CourseCard = ({ thumbnail, title, category, price ,id , reviews }) => {
    const calculateAverageRating = (reviews) => {
   if (!reviews || reviews.length === 0) return 0;
 
-  const total = reviews.reduce((sum, review) => sum + review.rating, 0);
+  const total = reviews.reduce((sum, review) => sum + (Number(review?.rating) || 0), 0);
   return (total / reviews.length).toFixed(1); // rounded to 1 decimal
 };
 

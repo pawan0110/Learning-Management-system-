@@ -7,6 +7,7 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import img from "../assets/empty.jpg"
 import Card from "../components/Card.jsx"
 import { setSelectedCourseData } from '../redux/courseSlice.js';
+import { setAllReview } from '../redux/reviewSlice'
 import { FaLock, FaPlayCircle } from "react-icons/fa";
 import { toast } from 'react-toastify';
 import { FaStar } from "react-icons/fa6";
@@ -40,6 +41,20 @@ function ViewCourse() {
       setRating(0)
       setComment("")
 
+      // refresh selected course (to include the new review) and global reviews
+      try {
+        const courseRes = await axios.get(`${serverUrl}/api/course/getcourse/${courseId}`, { withCredentials: true });
+        dispatch(setSelectedCourseData(courseRes.data));
+      } catch (err) {
+        console.error("Failed to refresh course after review:", err);
+      }
+
+      try {
+        const allRes = await axios.get(`${serverUrl}/api/review/allReview`, { withCredentials: true });
+        dispatch(setAllReview(allRes.data));
+      } catch (err) {
+        console.error("Failed to refresh all reviews:", err);
+      }
     } catch (error) {
       console.log(error)
       toast.error(error.response.data.message)
@@ -50,7 +65,7 @@ function ViewCourse() {
   const calculateAverageRating = (reviews) => {
   if (!reviews || reviews.length === 0) return 0;
 
-  const total = reviews.reduce((sum, review) => sum + review.rating, 0);
+  const total = reviews.reduce((sum, review) => sum + (Number(review?.rating) || 0), 0);
   return (total / reviews.length).toFixed(1); // rounded to 1 decimal
 };
 
@@ -361,7 +376,7 @@ const handleEnroll = async (courseId, userId) => {
       />
       <button
         
-        // className="bg-black text-white mt-3 px-4 py-2 rounded hover:bg-gray-800" onClick={handleReview}
+         className="bg-black text-white mt-3 px-4 py-2 rounded hover:bg-gray-800 cursor-pointer" onClick={handleReview}
       >
         Submit Review
       </button>

@@ -1,5 +1,5 @@
 import Review from "../model/reviewModel.js";
-import Course from "../models/courseModel.js"
+import Course from "../model/courseModel.js"
 
 export const addReview = async (req, res) => {
     try {
@@ -42,14 +42,13 @@ export const getCourseReviews = async (req,res) => {
 
 export const getAllReviews = async (req,res) => {
     try {
-        const reviews = await Review.find({}).populate("user", "name photoUrl role") // populate user name & photo
-        .sort({reviewsAt: -1}); //optional: latest first
+        const reviews = await Review.find({})
+          .populate("user", "name photoUrl role") // populate user name & photo
+          .sort({ reviewedAt: -1 }); // latest first
 
-        return res.status(200).json(
-            reviews
-        );
+        return res.status(200).json(reviews);
     } catch (error) {
         console.log("Error fetching reviews", error);
-        return res.status(500)({message: "Failed to fetch reviews"});
+        return res.status(500).json({message: "Failed to fetch reviews"});
     }
 }

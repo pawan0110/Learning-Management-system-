@@ -7,6 +7,7 @@ import cors from "cors";
 import userRauter from "./route/userRoute.js";
 import courseRouter from "./route/courseRoute.js";
 import paymentRouter from "./route/paymentRoute.js";
+import reviewRouter from "./route/reviewRoute.js";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use("/api/auth", authRouter)
 app.use("/api/user", userRauter)
 app.use("/api/course", courseRouter)
 app.use("/api/payment", paymentRouter)
+app.use("/api/review", reviewRouter)
 
 
 app.listen(port, () => {
