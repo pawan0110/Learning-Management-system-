@@ -8,7 +8,7 @@ import ExploreCourses from "../components/ExploreCourses";
 import About from '../components/About';
 import ai from "../assets/ai.png";
 import ai1 from "../assets/SearchAi.png";
-//import ReviewPage from '../components/ReviewPage';
+import ReviewPage from '../components/ReviewPage';
 import Footer from '../components/Footer';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -81,6 +81,7 @@ function Home() {
 
       <Cardspage />
       <About />
+      <ReviewPage/>
       <Footer />
     </div>
   );
