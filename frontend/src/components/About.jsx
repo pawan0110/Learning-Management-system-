@@ -1,6 +1,6 @@
 import React from "react";
 import learning from "../assets/learning-team.jpg";
-import VideoPlayer from "./videoPlayer";
+import VideoPlayer from "./VideoPlayer";
 import { TfiLayoutLineSolid } from "react-icons/tfi";
 import { BiSolidBadgeCheck } from "react-icons/bi";
 
