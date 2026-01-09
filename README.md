@@ -1,10 +1,8 @@
-Below is a **clean, professional GitHub README** tailored for your **Codenex LMS** project. You can copy-paste this directly into your `README.md`.
 
----
 
-# Codenex LMS 🎓
+# Codenex  🎓
 
-A full-stack Learning Management System (LMS) designed to manage courses, users, and payments with a modern MERN-based architecture.
+A full-stack **Learning Management System (LMS)** designed to manage courses, users, and payments using a modern **MERN-based architecture**.
 
 🔗 **Live Demo:** [https://codenex.vercel.app/](https://codenex.vercel.app/)
 
@@ -15,7 +13,7 @@ A full-stack Learning Management System (LMS) designed to manage courses, users,
 * User authentication and authorization using **JWT & cookies**
 * Role-based access control for **Admin and Learners**
 * Course creation, publishing, enrollment, and management
-* Lecture and video management with **file uploads**
+* Lecture and video management with file uploads
 * Secure payment integration using **Razorpay**
 * RESTful APIs for scalable backend operations
 * Fully deployed on cloud platforms
@@ -24,14 +22,14 @@ A full-stack Learning Management System (LMS) designed to manage courses, users,
 
 ## 🛠 Tech Stack
 
-**Frontend**
+### Frontend
 
 * React (Vite)
 * Redux Toolkit
 * Tailwind CSS
 * Axios
 
-**Backend**
+### Backend
 
 * Node.js
 * Express.js
@@ -39,11 +37,11 @@ A full-stack Learning Management System (LMS) designed to manage courses, users,
 * JWT Authentication
 * Multer (file uploads)
 
-**Payments**
+### Payments
 
 * Razorpay Payment Gateway
 
-**Deployment**
+### Deployment
 
 * Frontend: **Vercel**
 * Backend: **Render**
@@ -54,7 +52,7 @@ A full-stack Learning Management System (LMS) designed to manage courses, users,
 ## 📁 Core Modules
 
 * **Authentication:** Signup, Login, Logout, Protected Routes
-* **Admin Panel:** Create & manage courses and lectures
+* **Admin Panel:** Create and manage courses and lectures
 * **Course Management:** Publish, enroll, and view courses
 * **Video Handling:** Upload and manage lecture videos
 * **Payments:** Order creation and enrollment confirmation
@@ -64,33 +62,34 @@ A full-stack Learning Management System (LMS) designed to manage courses, users,
 
 ## ⚙️ Environment Variables
 
-Create a `.env` file in the backend directory and add:
+### Backend (`/backend/.env`)
 
 ```env
 PORT=
 JWT_SECRET=""
-EMAIL = ""
+EMAIL=""
+EMAIL_USER=""
+EMAIL_PASS=""
+MONGODB_URL=""
+
 CLOUDINARY_CLOUD_NAME=""
 CLOUDINARY_API_KEY=""
-GEMINI_API_KEY = ""
-MONGODB_URL=""
-EMAIL_USER = ""
-EMAIL_PASS = ""
 CLOUDINARY_API_SECRET=""
-RAZORPAY_KEY_ID = ""
-RAZORPAY_KEY_SECRET = ""
+
+RAZORPAY_KEY_ID=""
+RAZORPAY_KEY_SECRET=""
+
+GEMINI_API_KEY=""
 ```
 
-
-Create a `.env` file in the backend directory and add:
+### Frontend (`/frontend/.env`)
 
 ```env
 VITE_FIREBASE_APIKEY=""
-VITE_RAZORPAY_KEY_ID = ""
+VITE_RAZORPAY_KEY_ID=""
 ```
 
-
-
+---
 
 ## 🧑‍💻 Installation & Setup
 
@@ -116,15 +115,20 @@ npm install
 npm run dev
 ```
 
+---
 
 ## 🤝 Contributing
 
-Contributions are welcome. Feel free to fork the repository and submit a pull request.
+Contributions are welcome.
+Feel free to fork the repository and submit a pull request.
 
 ---
 
 ## 📄 License
 
-This project is for educational and portfolio purposes.
+This project is for **educational and portfolio purposes**.
+
+---
 
 
+Just tell me what you want next.
