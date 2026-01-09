@@ -130,5 +130,3 @@ This project is for **educational and portfolio purposes**.
 
 ---
 
-
-Just tell me what you want next.
