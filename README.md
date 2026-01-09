@@ -6,17 +6,22 @@ A full-stack **Learning Management System (LMS)** designed to manage courses, us
 
 🔗 **Live Demo:** [https://codenex.vercel.app/](https://codenex.vercel.app/)
 
+ℹ️ Live Demo Notice
+
+If the application loads slowly on first use, please wait a few seconds.
+The backend may take time to start due to free-tier hosting constraints.
+
 ---
 
 ## 🚀 Features
 
-* User authentication and authorization using **JWT & cookies**
-* Role-based access control for **Admin and Learners**
-* Course creation, publishing, enrollment, and management
-* Lecture and video management with file uploads
-* Secure payment integration using **Razorpay**
-* RESTful APIs for scalable backend operations
-* Fully deployed on cloud platforms
+User authentication and authorization using JWT and cookies
+Role-based access control for Educators and Learners
+Course creation, publishing, enrollment, and management
+Lecture and video management with secure file uploads
+Secure payment integration using Razorpay
+RESTful APIs for scalable and maintainable backend operations
+Integrated Gemini API to enable AI-powered search functionality
 
 ---
 
